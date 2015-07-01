@@ -1,0 +1,106 @@
+/*resets*/
+
+html, body, ul, li,
+p, h1, h2, section,
+figure,strong {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  display:block;
+  font: inherit;
+  box-sizing: inherit;
+  background: transparant;
+}
+body{
+  text-align: center;
+  margin-top:40px;
+  font-size:60px;
+  font-weight:700;
+}
+ul {
+  list-style: none;
+}
+
+/* clearfix */
+
+.group:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.disk {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#large {
+  height: 30px;
+  width: 120px;
+  background: purple;
+}
+
+#medium {
+  height: 30px;
+  width: 90px;
+  background: blue;
+}
+
+#small {
+  height: 30px;
+  width:60px;
+  background: red;
+}
+
+.top {
+  bottom: 60px;
+}
+
+.middle {
+  bottom: 30px;
+}
+
+.bottom {
+  bottom: 0;
+}
+
+#game{
+  width:600px;
+  height: 500px;
+  margin: 0 auto;
+  position:relative;
+  border: 5px solid #000;
+}
+.stack {
+  position: relative;
+  /*background:yellow;*/
+  float: left;
+  margin: 0 10px;
+  height:500px;
+  min-width:178px;
+  cursor: pointer;
+}
+
+.stack:nth-child(2) {
+  border-left: 3px solid gray;
+  border-right: 3px solid gray;
+}
+
+.stack:hover > * {
+  border: 2px solid yellow;
+}
+
+.stack:after{
+  content: "";
+  display:block;
+  width:20px;
+  background: brown;
+  height: 300px;
+  margin: 0 auto;
+  margin-top: 200px;
+}
+
+.selected{
+  background: yellow;
+}

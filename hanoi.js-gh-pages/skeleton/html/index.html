@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Towers Of Hanoi</title>
+    <link rel="stylesheet" type="text/css" href="../css/hanoi.css">
+  </head>
+  <body>
+    <h1>Towers of Hanoi</h1>
+    <figure id="game" class="group">
+      <!-- <section class="stack">
+        <figure class="disk" id="small"></figure>
+        <figure class="disk" id="medium"></figure>
+        <figure class="disk" id="large"></figure>
+      </section>
+      <section class="stack"></section>
+      <section class="stack"></section> -->
+    </figure>
+    <script src="../js/jquery-2.1.1.js"></script>
+    <!-- Whackjobs at GithubPages don't understand symlinks... -->
+    <script src="../../hanoi-core-solution/hanoi-core.js"></script>
+    <script src="../js/hanoi-view.js"></script>
+
+    <script>
+    $(document).on("ready", function(){
+
+      var $el = $("#game");
+      var Game = new window.Hanoi.Game();
+      var View = new window.Hanoi.View(Game, $el);
+
+    });
+
+    </script>
+  </body>
+</html>
