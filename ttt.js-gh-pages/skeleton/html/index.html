@@ -6,13 +6,22 @@
     <link rel="stylesheet" type="text/css" href="../css/ttt.css">
   </head>
   <body>
+    <figure id="game">
+    </figure>
     <script src="../js/jquery-2.1.1.js"></script>
     <!-- Whackjobs at GithubPages don't understand symlinks... -->
     <script src="../../ttt-core-solution/ttt-core.js"></script>
     <script src="../js/ttt-view.js"></script>
 
     <script>
-      // Write your code here.
+    $(document).on("ready", function(){
+
+      var $el = $("#game");
+      var Game = new window.TTT.Game();
+      var View = new window.TTT.View(Game, $el);
+      
+    });
+
     </script>
   </body>
 </html>
