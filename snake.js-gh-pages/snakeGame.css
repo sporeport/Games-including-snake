@@ -1,0 +1,37 @@
+/*reset*/
+h1, p, h2, section, figure,
+body, html {
+  padding: 0;
+  margin: 0;
+  border: 0;
+
+  text-decoration: none;
+
+  font: inherit;
+  color: inherit;
+}
+
+/* styles */
+
+figure.grid {
+  margin: 30px auto;
+  height: 500px;
+  width: 500px;
+  border: 1px solid black;
+}
+
+section.cell {
+  float: left;
+  height: 48px;
+  width: 48px;
+  border: 1px solid black;
+}
+
+section.snake {
+  background: blue;
+}
+
+section.apple {
+  background: red;
+  border-radius: 100%;
+}

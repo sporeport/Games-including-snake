@@ -3,27 +3,32 @@
     window.SnakeGame = {}
   }
 
-
-
   var Snake = window.SnakeGame.Snake = function () {
     this.segments = [new Coord([4, 5], this), new Coord([5,5], this)];
     this.dir = "N";
+    this.head = this.segments[0];
   }
 
   var DIR_KEY = { "N": [-1, 0],
-              "S": [1, 0],
-              "E": [0, 1],
-              "W": [0, -1] }
+                  "S": [1, 0],
+                  "E": [0, 1],
+                  "W": [0, -1] }
 
 
-  Snake.prototype.move = function () {
-    var new_seg = []
+  Snake.prototype.move = function (apple) {
+    this.segments.unshift(new Coord(this.nextMove(), this));
+    if (apple === false) {
+      this.segments.pop();
+    }
+  };
+
+  Snake.prototype.nextMove = function () {
+    var new_seg = [];
     new_seg[0] = this.segments[0].pos[0] + DIR_KEY[this.dir][0]
     new_seg[1] = this.segments[0].pos[1] + DIR_KEY[this.dir][1]
 
-    this.segments.unshift(new Coord(new_seg, this))
-    this.segments.pop()
-  }
+    return new_seg;
+  };
 
   Snake.prototype.turn = function (direction) {
     if (this.segments[0].isOpposite(direction) === false){
@@ -31,9 +36,7 @@
     }
   };
 
-
-
-  var Coord = function (coords, snake) {
+  var Coord = window.SnakeGame.Coord = function (coords, snake) {
     this.pos = coords;
     this.snake = snake;
   };
