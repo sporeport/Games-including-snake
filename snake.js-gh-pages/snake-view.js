@@ -22,7 +22,7 @@
 
   View.prototype.buildCanvasBoard = function () {
     for (var i = 0; i < this.boardSize * this.boardSize; i++){
-      this.$grid.append("<section class='cell'></section>");
+      this.$grid.append("<section class='cell'>" + i + "</section>");
     }
   }
 
@@ -30,13 +30,14 @@
     var snakeSegs = this.snake.segments;
 
     if (this.lastSegment != null) {
-      this.$grid.find(":nth-child(" + this.lastSegment + ")").removeClass("snake");
+      this.$grid.find(".cell").eq(this.lastSegment).removeClass("snake");
     }
 
     for (var i = 0; i < snakeSegs.length; i++) {
       var pos = snakeSegs[i].pos;
       var child = (pos[0] * (this.boardSize)) + pos[1];
-      this.$grid.find(":nth-child(" + child + ")").addClass("snake");
+
+      this.$grid.find(".cell").eq(child).addClass("snake");
 
       if (i === snakeSegs.length - 1) {
         this.lastSegment = child;
@@ -71,7 +72,7 @@
     }
     var child = (row * (this.boardSize)) + col;
 
-    this.$grid.find(":nth-child(" + child + ")").addClass("apple");
+    this.$grid.find(".cell").eq(child).addClass("apple");
   };
 
   View.prototype.checkApple = function (coord) {
@@ -92,20 +93,21 @@
           this.removeAndAddApple();
         }
 
-        console.log("apple: ", this.apple, "Snake Head: ", this.snake.segments[0].pos)
         this.snake.move(apple);
         this.canvasRender();
+        console.log("Snake Head: ", this.snake.segments[0].pos)
+
         this.step();
-        } else {
-          alert("Game Over");
-        };
-    }.bind(this), 250);
+      } else {
+        alert("Game Over");
+      };
+    }.bind(this), 1000);
   };
 
   View.prototype.removeAndAddApple = function () {
     var child = (this.apple[0] * (this.boardSize)) + this.apple[1];
 
-    this.$grid.find(":nth-child(" + child + "n)").removeClass("apple");
+    this.$grid.find(".cell").eq(child).removeClass("apple");
     this.plantApple();
   }
 
