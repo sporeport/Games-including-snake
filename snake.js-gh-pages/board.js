@@ -13,8 +13,8 @@
     var isValid = true;
     var nextPos = this.snake.nextMove();
 
-    if (nextPos[0] > this.BOARD_SIZE  || nextPos[0] < 0 ||
-        nextPos[1] > this.BOARD_SIZE || nextPos[1] < 0) {
+    if (nextPos[0] >= this.BOARD_SIZE || nextPos[0] < 0 ||
+        nextPos[1] >= this.BOARD_SIZE || nextPos[1] < 0) {
       isValid = false;
     }
 

@@ -22,7 +22,7 @@
 
   View.prototype.buildCanvasBoard = function () {
     for (var i = 0; i < this.boardSize * this.boardSize; i++){
-      this.$grid.append("<section class='cell'>" + i + "</section>");
+      this.$grid.append("<section class='cell'></section>");
     }
   }
 
@@ -55,23 +55,25 @@
     var snakeSegments = this.snake.segments;
 
     while (planted === false) {
+      planted = true;
       var row = Math.floor(Math.random() * 10);
       var col = Math.floor(Math.random() * 10);
 
+      // debugger
+      if (this.apple && row === this.apple[0] && col === this.apple[1]) {
+        planted = false
+      }
+
       for (var i = 0; i < snakeSegments.length; i++) {
-        if (snakeSegments[i].pos[0] === row ||
+        if (snakeSegments[i].pos[0] === row &&
             snakeSegments[i].pos[1] === col) {
-          taken = true;
+          planted = false;
         }
       }
-
-      if (taken === false) {
-        this.apple = [row, col];
-        planted = true;
-      }
     }
-    var child = (row * (this.boardSize)) + col;
 
+    this.apple = [row, col];
+    var child = (row * (this.boardSize)) + col;
     this.$grid.find(".cell").eq(child).addClass("apple");
   };
 
@@ -86,8 +88,8 @@
   View.prototype.step = function () {
     window.setTimeout(function () {
       var apple = false;
-
       if (this.board.checkValidMove()) {
+
         if (this.checkApple(this.snake.nextMove())) {
           apple = true;
           this.removeAndAddApple();
@@ -95,18 +97,16 @@
 
         this.snake.move(apple);
         this.canvasRender();
-        console.log("Snake Head: ", this.snake.segments[0].pos)
 
         this.step();
       } else {
         alert("Game Over");
       };
-    }.bind(this), 1000);
+    }.bind(this), 150);
   };
 
   View.prototype.removeAndAddApple = function () {
     var child = (this.apple[0] * (this.boardSize)) + this.apple[1];
-
     this.$grid.find(".cell").eq(child).removeClass("apple");
     this.plantApple();
   }

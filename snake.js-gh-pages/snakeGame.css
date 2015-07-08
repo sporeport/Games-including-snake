@@ -22,9 +22,8 @@ figure.grid {
 
 section.cell {
   float: left;
-  height: 48px;
-  width: 48px;
-  border: 1px solid black;
+  height: 50px;
+  width: 50px;
 }
 
 section.snake {
