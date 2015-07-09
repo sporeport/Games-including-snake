@@ -6,7 +6,7 @@
   var Board = window.SnakeGame.Board = function(){
     this.snake = new SnakeGame.Snake();
     this.grid = this.generateGrid();
-    this.BOARD_SIZE = 10;
+    this.BOARD_SIZE = 25;
   };
 
   Board.prototype.checkValidMove = function () {
@@ -16,6 +16,14 @@
     if (nextPos[0] >= this.BOARD_SIZE || nextPos[0] < 0 ||
         nextPos[1] >= this.BOARD_SIZE || nextPos[1] < 0) {
       isValid = false;
+    }
+
+    var segments = this.snake.segments;
+    for (var i = 0; i < segments.length; i++) {
+      var coord = segments[i]
+      if (coord.pos[0] === nextPos[0] && coord.pos[1] === nextPos[1]) {
+        isValid = false;
+      }
     }
 
     return isValid;

@@ -10,6 +10,8 @@
 
     this.lastSegment = null;
     this.apple = null;
+    this.speedInMs = 100;
+    this.points = 0;
 
     this.$el = $el;
     this.$grid = this.$el.find(".grid");
@@ -18,6 +20,7 @@
     this.buildCanvasBoard();
     this.canvasRender();
     this.startGame();
+
   }
 
   View.prototype.buildCanvasBoard = function () {
@@ -27,6 +30,8 @@
   }
 
   View.prototype.canvasRender = function () {
+    $(".points").text("Points: " + this.points);
+
     var snakeSegs = this.snake.segments;
 
     if (this.lastSegment != null) {
@@ -91,6 +96,7 @@
       if (this.board.checkValidMove()) {
 
         if (this.checkApple(this.snake.nextMove())) {
+          this.points += 100
           apple = true;
           this.removeAndAddApple();
         }
@@ -100,9 +106,9 @@
 
         this.step();
       } else {
-        alert("Game Over");
+        $(".game-over").addClass("active")
       };
-    }.bind(this), 150);
+    }.bind(this), this.speedInMs);
   };
 
   View.prototype.removeAndAddApple = function () {
