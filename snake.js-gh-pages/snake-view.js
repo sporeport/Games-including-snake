@@ -61,8 +61,8 @@
 
     while (planted === false) {
       planted = true;
-      var row = Math.floor(Math.random() * 10);
-      var col = Math.floor(Math.random() * 10);
+      var row = Math.floor(Math.random() * this.board.BOARD_SIZE);
+      var col = Math.floor(Math.random() * this.board.BOARD_SIZE);
 
       // debugger
       if (this.apple && row === this.apple[0] && col === this.apple[1]) {
