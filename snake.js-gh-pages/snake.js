@@ -4,7 +4,7 @@
   }
 
   var Snake = window.SnakeGame.Snake = function () {
-    this.segments = [new Coord([4, 5], this), new Coord([5,5], this)];
+    this.segments = [new Coord([14, 10], this), new Coord([15, 10], this)];
     this.dir = "N";
     this.head = this.segments[0];
   }
