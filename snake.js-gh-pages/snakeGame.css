@@ -1,24 +1,40 @@
 /*reset*/
 h1, p, h2, section, figure,
-body, html {
+body, html, button {
   padding: 0;
   margin: 0;
   border: 0;
 
   text-decoration: none;
+  background: none;
+
 
   font: inherit;
   color: inherit;
 }
 
+
+/* utils */
+
+.group {
+  content: "";
+  clear: both;
+  display: block;
+}
+
 /* styles */
+
 body {
   font-family: sans-serif;
 }
 
-figure.grid {
+.game-container {
   position: relative;
+  width: 502px;
   margin: 30px auto;
+}
+
+figure.grid {
   height: 500px;
   width: 500px;
   background: #7ED87E;
@@ -48,14 +64,50 @@ div.points {
 }
 
 .game-over {
-  display:none;
+  width: 330px;
+  display: none;
   font-size: 60px;
   position: absolute;
-  left: 90px;
   top: 90px;
   z-index: 1;
+  transition: left .75s;
 }
 
-strong.active {
+.retry-button {
+  display: none;
+  width: 140px;
+  font-size: 24px;
+  position: absolute;
+  top: 160px;
+  z-index: 1;
+  outline: none;
+
+  transition: left .75s;
+}
+
+.retry-button:hover {
+  cursor: pointer;
+  color: blue;
+}
+
+/* special */
+
+.standby {
+  left: 1200px;
+}
+
+.game-over-in-place {
+  left: 100px;
+}
+
+.retry-button-in-place {
+  left: 190px;
+}
+
+.leave {
+  left: -800px;
+}
+
+.active {
   display: block
 }

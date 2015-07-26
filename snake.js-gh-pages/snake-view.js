@@ -4,6 +4,13 @@
   }
 
   var View = window.SnakeGame.View = function($el){
+    this.$el = $el;
+    this.$grid = this.$el.find(".grid");
+
+    this.initialize(false);
+  };
+
+  View.prototype.initialize = function (restart) {
     this.board = new window.SnakeGame.Board();
     this.snake = this.board.snake;
     this.boardSize = this.board.BOARD_SIZE;
@@ -13,21 +20,48 @@
     this.speedInMs = 100;
     this.points = 0;
 
-    this.$el = $el;
-    this.$grid = this.$el.find(".grid");
+    $(".game-over").addClass("standby");
+    $(".retry-button").addClass("standby");
 
-    this.bindListener();
+    if (!restart) {
+      this.bindListener();
+      this.bindRestart();
+    } else {
+      this.$grid.empty();
+    }
+
     this.buildCanvasBoard();
     this.canvasRender();
     this.startGame();
+  };
 
-  }
+  View.prototype.restartGame = function () {
+    if ($(".game-over").hasClass("active")) {
+      $(".game-over").addClass("leave")
+      $(".retry-button").addClass("leave")
+
+      $(".game-over").on("transitionend", function () {
+        $(".game-over").removeClass("active");
+        $(".retry-button").removeClass("active");
+
+        $(".game-over").removeClass("leave");
+        $(".retry-button").removeClass("leave");
+
+        $(".game-over").removeClass("game-over-in-place");
+        $(".retry-button").removeClass("retry-button-in-place");
+
+        $(".game-over").unbind("transitionend")
+
+        this.initialize(true);
+      }.bind(this));
+    }
+  };
 
   View.prototype.buildCanvasBoard = function () {
     for (var i = 0; i < this.boardSize * this.boardSize; i++){
       this.$grid.append("<section class='cell'></section>");
     }
-  }
+  };
 
   View.prototype.canvasRender = function () {
     $(".points").text("Points: " + this.points);
@@ -64,7 +98,6 @@
       var row = Math.floor(Math.random() * this.board.BOARD_SIZE);
       var col = Math.floor(Math.random() * this.board.BOARD_SIZE);
 
-      // debugger
       if (this.apple && row === this.apple[0] && col === this.apple[1]) {
         planted = false
       }
@@ -96,7 +129,7 @@
       if (this.board.checkValidMove()) {
 
         if (this.checkApple(this.snake.nextMove())) {
-          this.points += 100
+          this.points += 100;
           apple = true;
           this.removeAndAddApple();
         }
@@ -106,16 +139,36 @@
 
         this.step();
       } else {
-        $(".game-over").addClass("active")
+        $(".game-over").addClass("active");
+        $(".retry-button").addClass("active");
+
+        window.setTimeout(function () {
+          $(".game-over").addClass("game-over-in-place")
+          $(".retry-button").addClass("retry-button-in-place")
+        }, 0)
       };
     }.bind(this), this.speedInMs);
+  };
+
+  View.prototype.bindRestart = function () {
+    var that = this;
+
+    $(document).on("keyup", function (event) {
+      if (event.keyCode === 13) {
+        that.restartGame();
+      };
+    });
+
+    $(".retry-button").on("click", function (event) {
+      that.restartGame();
+    });
   };
 
   View.prototype.removeAndAddApple = function () {
     var child = (this.apple[0] * (this.boardSize)) + this.apple[1];
     this.$grid.find(".cell").eq(child).removeClass("apple");
     this.plantApple();
-  }
+  };
 
   View.prototype.bindListener = function () {
     this.$el.on("keydown", function(event){
